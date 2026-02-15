@@ -1,0 +1,8 @@
+main page
+@for (chat of chatDB; track $index) {
+<div>
+    <p>{{chat.created_at}}</p>
+    <p>{{chat.name}}</p>
+    <p>{{chat.message}}</p>
+</div>
+}
