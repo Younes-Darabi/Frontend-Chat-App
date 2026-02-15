@@ -1,8 +1,18 @@
-main page
-@for (chat of chatDB; track $index) {
+@for (chat of getData; track $index) {
 <div>
     <p>{{chat.created_at}}</p>
     <p>{{chat.name}}</p>
     <p>{{chat.message}}</p>
 </div>
 }
+<form (ngSubmit)="post()">
+    <label> Name:
+        <input type="text" [(ngModel)]="postData.name" name="name" required>
+    </label>
+    <label> Message:
+        <input type="text" [(ngModel)]="postData.message" name="message" required>
+    </label>
+    <button type="submit">post</button>
+</form>
+
+<button (click)="get()">Get</button>

@@ -1,4 +1,4 @@
-export interface ChatInterface {
+export interface GetInterface {
     id: number;
     name: string;
     message: string;

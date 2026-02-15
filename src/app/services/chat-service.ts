@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ChatInterface } from '../interfaces/chat-interface';
+import { Observable } from 'rxjs';
+import { GetInterface } from '../interfaces/get-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,7 @@ import { ChatInterface } from '../interfaces/chat-interface';
 export class ChatService {
   http = inject(HttpClient);
 
-  async getChatDB() {
-    const data = await this.http.get<ChatInterface[]>('http://127.0.0.1:8000/').subscribe((data) => {
-      console.table(data);
-      return data;
-    });
+  get(): Observable<GetInterface[]> {
+    return this.http.get<GetInterface[]>('http://127.0.0.1:8000/');
   }
 }
