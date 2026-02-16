@@ -1,8 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { ChatService } from '../services/chat-service';
-import { GetInterface } from '../interfaces/get-interface';
 import { FormsModule } from '@angular/forms';
+
+interface GetInterface {
+    id: number;
+    name: string;
+    message: string;
+    created_at: string;
+}
 
 @Component({
   selector: 'app-main-page',
@@ -11,13 +16,19 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './main-page.scss',
 })
 export class MainPage {
-  chatService = inject(ChatService);
   http = inject(HttpClient);
   getData: GetInterface[] = [];
   postData = {
     name: '',
     message: ''
   };
+
+  get() {
+    this.http.get<GetInterface[]>('http://127.0.0.1:8000/').subscribe((data) => {
+      this.getData = data;
+      console.table(this.getData);
+    });
+  }
 
   post() {
     this.http.post('http://127.0.0.1:8000/', this.postData).subscribe((data) => {
@@ -27,28 +38,8 @@ export class MainPage {
     });
   }
 
-  get() {
-    this.chatService.get().subscribe((data) => {
-      this.getData = data;
-      console.table(this.getData);
-    });
-  }
-
   clear() {
     this.postData.name = "";
     this.postData.message = "";
   }
-
-
 }
-
-// fetch('http://127.0.0.1:8000/', {
-//     body: JSON.stringify({ "title": this.postData }),
-//     headers : {"Content-Type": "application/json;charset=UTF-8"},
-//     method: 'post'
-// });
-
-// this.http.get<ChatInterface[]>('http://127.0.0.1:8000/').subscribe((data) => {
-//   this.data = data;
-//   console.table(data);
-// });
